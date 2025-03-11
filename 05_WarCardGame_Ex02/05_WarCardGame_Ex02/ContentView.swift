@@ -21,7 +21,9 @@ struct ContentView: View {
             "background-plain", "background-plain", "background-wood-cartoon",
             "background-wood-grain",
         ]
-        background = backRandom[Int.random(in: 0...3)]
+        //background = backRandom[Int.random(in: 0...3)]
+        
+        background = backRandom.randomElement()!
         
         colorCard = String(Int.random(in: 1...2))
         
