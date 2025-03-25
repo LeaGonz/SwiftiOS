@@ -22,13 +22,14 @@ struct ContentView: View {
                 // character
                 Button {
                     //print("test")
-                    imgClicked.toggle()
+                    //imgClicked.toggle()
+                    imgClicked = true
                 } label: {
                     Image("jon")
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 200)
-                        .cornerRadius(100)
+                        .frame(height: 300)
+                        .cornerRadius(400)
                 }
 
                 // name

@@ -1,0 +1,20 @@
+[
+	{
+		"id": 1,
+		"name": "Shiago",
+        "description": "O Shiago é aquele amigo que, em vez de desenhar apenas, desenha também histórias, fofocas e intrigas. De Brasil, mas com um talento especial para saber tudo o que acontece em qualquer lugar, até no espaço! Designer de dia, fofoqueiro de noite.",
+		"image": "shiago"
+	},
+    {
+		"id": 2,
+		"name": "Licinio",
+        "description": "O Licínio é o tipo de amigo que, quando não está a comer bacon, está a espalhar fofocas com a mesma intensidade com que come o seu prato favorito. Se alguém souber algo, pode ter certeza que o Licínio já ouviu.",
+		"image": "licinio"
+	},
+    {
+		"id": 3,
+		"name": "Yo",
+        "description": "É perfeito.",
+		"image": "luis"
+	},
+]

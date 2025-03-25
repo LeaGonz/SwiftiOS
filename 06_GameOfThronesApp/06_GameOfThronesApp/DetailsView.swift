@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     var body: some View {
+        @State var newv = true
         ZStack {
             //Backimg
             Image("background")
@@ -22,9 +23,11 @@ struct DetailsView: View {
                     .padding(20)
             }
         }
+
     }
 }
 
 #Preview {
     DetailsView()
 }
+
