@@ -8,7 +8,7 @@
 import Foundation
 
 class TasksList{
-    var allTasks: [Task] = []
+    var allTasksJSON: [Task] = []
     
     init (){
         decodeJSONData()
@@ -19,9 +19,9 @@ class TasksList{
             do{
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
-                allTasks = try
+                allTasksJSON = try
                     decoder.decode([Task].self, from: data)
-                print(allTasks.count)
+                //print(allTasksJSON.count)
             }catch{
                 print("Error decoding JSON data: \(error)")
             }

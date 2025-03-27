@@ -9,40 +9,42 @@ import SwiftUI
 
 struct ContentView: View {
     @State var formClicked = false
-    
-    let listTasks = TasksList().allTasks
-    
+    @State var listTasks = TasksList().allTasksJSON
+
     var body: some View {
-        VStack{
+        VStack {
             NavigationStack {
-                List(listTasks){ task in
-                    NavigationLink{
-                        TasksListDetail(task: task)
-                    }label:{
-                        HStack{
+                List(listTasks) { task in
+                    NavigationLink {
+                        TasksListDetail(allTasks: $listTasks, task: task)
+                    } label: {
+                        HStack {
                             Image(task.image)
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: 100, height: 100)
                             Text(task.title)
                                 .fontWeight(.bold)
                         }
                     }
                 }
                 .navigationTitle("Lista Tarefas")
+                VStack {
+                    Button {
+                        formClicked = true
+                    } label: {
+                        Image(systemName: "document.badge.plus.fill")
+                        Text("Adicionar Tarefa")
+                    }
+                    .foregroundStyle(.green)
+                    .fontWeight(.bold)
+                    .font(.title)
+                }
+                .sheet(isPresented: $formClicked) {
+                    AddTask(allTasks: $listTasks, formClicked: $formClicked)
+                }
             }
             .preferredColorScheme(.dark)
-        }
-        VStack{
-            Button{
-                formClicked = true
-            }label:{
-                Image(systemName: "widget.small.badge.plus")
-                Text("Add Task")
-                    .fontWeight(.bold)
-            }.foregroundStyle(.green)
-        }
-        .sheet(isPresented: $formClicked){
-            AddTask()
+
         }
     }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct AppTaskListApp: App {
     var body: some Scene {
         WindowGroup {
-            AddTask()
+            ContentView()
         }
     }
 }

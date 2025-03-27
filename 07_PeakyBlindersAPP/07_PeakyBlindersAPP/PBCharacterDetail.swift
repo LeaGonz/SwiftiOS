@@ -35,5 +35,5 @@ struct PBCharacterDetail: View {
 }
 
 #Preview {
-    PBCharacterDetail(character: PBCharactersList().allCharacters[3])
+    PBCharacterDetail(character: PBCharactersList().allCharacters[0])
 }

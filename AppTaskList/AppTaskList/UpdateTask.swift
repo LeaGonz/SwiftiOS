@@ -1,17 +1,18 @@
 //
-//  AddTask.swift
+//  UpdateTask.swift
 //  AppTaskList
 //
-//  Created by MultiLab PRT 14 on 25/03/2025.
+//  Created by MultiLab PRT 14 on 27/03/2025.
 //
 
 import SwiftUI
 
-struct AddTask: View {
-
+struct UpdateTask: View {
     @Binding var allTasks: [Task]
     @Binding var formClicked: Bool
-
+    
+    var task: Task
+    
     @State private var taskTitle: String = ""
     @State private var taskDescription: String = ""
     @State private var taskCategory: String = ""
@@ -23,7 +24,7 @@ struct AddTask: View {
     ]
 
     var body: some View {
-        Text("Adicionar Tarefa")
+        Text("Atualizar Tarefa")
             .font(.title)
             .fontWeight(.bold)
         VStack {
@@ -67,10 +68,16 @@ struct AddTask: View {
                 }
             }
             .multilineTextAlignment(.leading)
+            .onAppear() {
+                taskTitle = task.title
+                taskDescription = task.description
+                taskCategory = task.category
+                taskImage = task.image
+            }
 
             Button {
                 var newTask = Task(
-                    id: allTasks.count + 1,
+                    id: task.id,
                     title: taskTitle,
                     description: taskDescription,
                     category: taskCategory,
@@ -78,8 +85,8 @@ struct AddTask: View {
                 allTasks.append(newTask)
                 formClicked = false
             } label: {
-                Image(systemName: "document.badge.plus.fill")
-                Text("Adicionar")
+                Image(systemName: "pencil")
+                Text("Atualizar")
             }
             .foregroundStyle(.green)
             .fontWeight(.bold)
@@ -93,5 +100,5 @@ struct AddTask: View {
     @State var allTasks: [Task] = []
     @State var formClicked: Bool = false
 
-    AddTask(allTasks: $allTasks, formClicked: $formClicked)
+    UpdateTask(allTasks: $allTasks, formClicked: $formClicked, task: TasksList().allTasksJSON[0])
 }
