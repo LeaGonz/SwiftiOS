@@ -6,9 +6,9 @@
 //
 
 struct Task: Identifiable, Decodable, Equatable {
-    let id: Int
-    let title: String
-    let description: String
-    let category: String
-    let image: String
+    var id: Int
+    var title: String
+    var description: String
+    var category: String
+    var image: String
 }

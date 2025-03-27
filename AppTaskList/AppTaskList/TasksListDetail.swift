@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct TasksListDetail: View {
-
+    @Environment(\.dismiss) var dismiss
     @Binding var allTasks: [Task]
     @State var formClicked = false
+    @State var showAlert = false
     let task: Task
-    
+
     var body: some View {
         VStack {
 
             Spacer()
+            
+            Text(task.title)
+                .font(.title)
+                .fontWeight(.bold)
 
             ZStack {
+
                 Image(task.image)
                     .resizable()
                     .scaledToFill()
@@ -28,9 +34,6 @@ struct TasksListDetail: View {
             }
             .padding()
 
-            Text(task.title)
-                .font(.title)
-                .fontWeight(.bold)
             Text(task.description)
                 .padding()
                 .multilineTextAlignment(.center)
@@ -52,14 +55,16 @@ struct TasksListDetail: View {
                 .font(.title)
                 .foregroundStyle(.green)
                 .sheet(isPresented: $formClicked) {
-                    UpdateTask(allTasks: $allTasks, formClicked: $formClicked, task: task)
+                    UpdateTask(
+                        allTasks: $allTasks, formClicked: $formClicked,
+                        task: task)
                 }
 
                 Spacer()
 
                 // Delete function
                 Button(action: {
-                    allTasks.removeAll { lt in lt.id == task.id }
+                    showAlert = true
                 }) {
                     Image(systemName: "xmark.bin.fill")
                     Text("Apagar")
@@ -67,6 +72,20 @@ struct TasksListDetail: View {
                 .fontWeight(.bold)
                 .font(.title)
                 .foregroundStyle(.red)
+                .alert(
+                    "Apagar Tarefa",
+                    isPresented: $showAlert
+                ) {
+                    Button("Apagar") {
+                        allTasks.removeAll(where: { at in at.id == task.id })
+                        dismiss()
+                    }
+                    Button("Cancelar") {}
+                } message: {
+                    Text(
+                        "Tem certeza que deseja apagar '\(task.title)'? Esta ação não pode ser desfeita."
+                    )
+                }
 
                 Spacer()
             }
@@ -74,7 +93,6 @@ struct TasksListDetail: View {
             Spacer()
 
         }
-        .preferredColorScheme(.dark)
     }
 }
 

@@ -85,7 +85,6 @@ struct AddTask: View {
             .fontWeight(.bold)
             .font(.title)
         }
-        .preferredColorScheme(.dark)
     }
 }
 

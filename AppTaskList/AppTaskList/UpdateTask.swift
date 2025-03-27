@@ -10,9 +10,9 @@ import SwiftUI
 struct UpdateTask: View {
     @Binding var allTasks: [Task]
     @Binding var formClicked: Bool
-    
+
     var task: Task
-    
+
     @State private var taskTitle: String = ""
     @State private var taskDescription: String = ""
     @State private var taskCategory: String = ""
@@ -28,7 +28,6 @@ struct UpdateTask: View {
             .font(.title)
             .fontWeight(.bold)
         VStack {
-
             VStack {
                 Form {
                     HStack {
@@ -68,21 +67,23 @@ struct UpdateTask: View {
                 }
             }
             .multilineTextAlignment(.leading)
-            .onAppear() {
+            .onAppear {
                 taskTitle = task.title
                 taskDescription = task.description
                 taskCategory = task.category
                 taskImage = task.image
             }
 
+            // Update function
             Button {
-                var newTask = Task(
-                    id: task.id,
-                    title: taskTitle,
-                    description: taskDescription,
-                    category: taskCategory,
-                    image: taskImage)
-                allTasks.append(newTask)
+                if let index = allTasks.firstIndex(where: { at in
+                    at.id == task.id
+                }) {
+                    allTasks[index].title = taskTitle
+                    allTasks[index].description = taskDescription
+                    allTasks[index].category = taskCategory
+                    allTasks[index].image = taskImage
+                }
                 formClicked = false
             } label: {
                 Image(systemName: "pencil")
@@ -92,7 +93,6 @@ struct UpdateTask: View {
             .fontWeight(.bold)
             .font(.title)
         }
-        .preferredColorScheme(.dark)
     }
 }
 
@@ -100,5 +100,7 @@ struct UpdateTask: View {
     @State var allTasks: [Task] = []
     @State var formClicked: Bool = false
 
-    UpdateTask(allTasks: $allTasks, formClicked: $formClicked, task: TasksList().allTasksJSON[0])
+    UpdateTask(
+        allTasks: $allTasks, formClicked: $formClicked,
+        task: TasksList().allTasksJSON[0])
 }
