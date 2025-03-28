@@ -4,20 +4,20 @@
         "title": "Lavar Roupa",
         "description": "Lavar Roupa bem limpinha",
         "category": "Casa",
-        "image": "casa1"
+        "image": "Calendar"
     },
     {
         "id": 2,
         "title": "Jogar futebol",
         "description": "Jogar com os amigos futebol",
         "category": "Desporto",
-        "image": "Desporto"
+        "image": "Delegation"
     },
     {
         "id": 3,
         "title": "Trabalho",
         "description": "Enviar email",
         "category": "Trabalho",
-        "image": "Trabalho"
+        "image": "Management"
     }
 ]

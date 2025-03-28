@@ -24,18 +24,17 @@ struct ContentView: View {
 
                     Spacer()
 
-                    // Add function
+                    // Dark / Light mode
                     Button {
-                        formClicked = true
+                        isDarkMode.toggle()
                     } label: {
-                        Image(systemName: "plus.rectangle.fill")
+                        Image(
+                            systemName: isDarkMode
+                                ? "moon.fill" : "sun.max.fill")
                     }
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.yellow)
                     .fontWeight(.bold)
-                    .font(.largeTitle)
-                    .sheet(isPresented: $formClicked) {
-                        AddTask(allTasks: $allTasks, formClicked: $formClicked)
-                    }
+                    .font(.title)
                 }
                 .padding(.horizontal)
 
@@ -71,7 +70,21 @@ struct ContentView: View {
                 }
 
                 HStack {
-
+                    
+                    Spacer()
+                    
+                    // Add function
+                    Button {
+                        formClicked = true
+                    } label: {
+                        Image(systemName: "plus.rectangle.fill")
+                    }
+                    .foregroundStyle(.green)
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
+                    .sheet(isPresented: $formClicked) {
+                        AddTask(allTasks: $allTasks, formClicked: $formClicked)
+                    }
                     Spacer()
 
                     // Delete All function
@@ -106,20 +119,6 @@ struct ContentView: View {
                         Image(systemName: "person.2.fill")
                     }
                     .foregroundStyle(isDarkMode ? .white : .black)
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
-
-                    Spacer()
-
-                    // Dark / Light mode
-                    Button {
-                        isDarkMode.toggle()
-                    } label: {
-                        Image(
-                            systemName: isDarkMode
-                                ? "moon.fill" : "sun.max.fill")
-                    }
-                    .foregroundStyle(.yellow)
                     .fontWeight(.bold)
                     .font(.largeTitle)
 

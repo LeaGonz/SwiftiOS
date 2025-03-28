@@ -18,10 +18,14 @@ struct TasksListDetail: View {
         VStack {
 
             Spacer()
-            
+
             Text(task.title)
                 .font(.title)
                 .fontWeight(.bold)
+
+            Text(task.category)
+                .fontWeight(.ultraLight)
+                .multilineTextAlignment(.center)
 
             ZStack {
 
@@ -102,5 +106,6 @@ struct TasksListDetail: View {
 }
 
 #Preview {
-    TasksListDetail(allTasks: .constant([Task]([])), task: TasksList().allTasksJSON[0])
+    TasksListDetail(
+        allTasks: .constant([Task]([])), task: TasksList().allTasksJSON[0])
 }

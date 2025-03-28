@@ -18,9 +18,10 @@ struct UpdateTask: View {
     @State private var taskCategory: String = ""
     @State private var taskImage: String = ""
 
+    @State var errors: [String: String] = [:]
+
     let imageList = [
-        "casa1", "casa2", "trabalho1", "trabalho2", "educaçao1", "educacao2",
-        "compras1", "compras2", "desporto1", "desporto2",
+        "Calendar","Delegation","Management","Priority","Task"
     ]
 
     var body: some View {
@@ -28,13 +29,19 @@ struct UpdateTask: View {
             .font(.title)
             .fontWeight(.bold)
             .padding()
-        
+
         VStack {
             VStack {
                 Form {
                     HStack {
                         Text("Nome:")
                         TextField("Insira nome da tarefa", text: $taskTitle)
+                    }
+                    if !errors.isEmpty {
+                        if errors.keys.contains("name") {
+                            let err = errors["name"] ?? ""
+                            Text(err).foregroundStyle(.red)
+                        }
                     }
                     HStack {
                         Text("Descrição:")
@@ -49,6 +56,12 @@ struct UpdateTask: View {
                             Text("Desporto").tag("Desporto")
                         }
                     }
+                    if !errors.isEmpty {
+                        if errors.keys.contains("category") {
+                            let err = errors["category"] ?? ""
+                            Text(err).foregroundStyle(.red)
+                        }
+                    }
                     HStack {
                         Picker(
                             "Imagem: ", selection: $taskImage,
@@ -60,14 +73,14 @@ struct UpdateTask: View {
                                     })
                             })
                     }
-                    
+
                     if taskImage != "" {
                         Image(taskImage)
                             .resizable()
                             .scaledToFit()
                             .cornerRadius(20)
                     }
-                    
+
                 }
             }
             .multilineTextAlignment(.leading)
@@ -78,42 +91,56 @@ struct UpdateTask: View {
                 taskImage = task.image
             }
             HStack {
-            // Update function
-            Button {
-                if let index = allTasks.firstIndex(where: { at in
-                    at.id == task.id
-                }) {
-                    allTasks[index].title = taskTitle
-                    allTasks[index].description = taskDescription
-                    allTasks[index].category = taskCategory
-                    allTasks[index].image = taskImage
+                // Update function
+                Button {
+                    if taskTitle.isEmpty {
+                        errors["name"] = "O nome é obrigatório."
+                    } else {
+                        errors["name"] = nil
+                    }
+
+                    if taskCategory.isEmpty {
+                        errors["category"] = "A categoria é obrigatória."
+                    } else {
+                        errors["category"] = nil
+                    }
+
+                    if errors.isEmpty {
+                        if let index = allTasks.firstIndex(where: { at in
+                            at.id == task.id
+                        }) {
+                            allTasks[index].title = taskTitle
+                            allTasks[index].description = taskDescription
+                            allTasks[index].category = taskCategory
+                            allTasks[index].image = taskImage
+                        }
+                        formClicked = false
+                    }
+                } label: {
+                    Text("Atualizar")
+                        .padding()
                 }
-                formClicked = false
-            } label: {
-                Text("Atualizar")
-                    .padding()
-            }
-            .frame(maxWidth: 200)
-            .background(.green)
-            .cornerRadius(40)
-            .foregroundStyle(.white)
-            .fontWeight(.bold)
-            .font(.callout)
-            
-            // Voltar function
-            Button(action: {
-                formClicked = false
-            }) {
-                Text("Voltar")
-                    .padding()
-            }
-            .frame(maxWidth: .infinity)
-            .background(.red)
-            .cornerRadius(40)
-            .foregroundStyle(.white)
-            .fontWeight(.bold)
-            .font(.callout)
-        }.padding()
+                .frame(maxWidth: 200)
+                .background(.green)
+                .cornerRadius(40)
+                .foregroundStyle(.white)
+                .fontWeight(.bold)
+                .font(.callout)
+
+                // Voltar function
+                Button(action: {
+                    formClicked = false
+                }) {
+                    Text("Voltar")
+                        .padding()
+                }
+                .frame(maxWidth: .infinity)
+                .background(.red)
+                .cornerRadius(40)
+                .foregroundStyle(.white)
+                .fontWeight(.bold)
+                .font(.callout)
+            }.padding()
         }
     }
 }

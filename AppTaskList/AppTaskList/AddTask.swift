@@ -20,8 +20,7 @@ struct AddTask: View {
     @State var errors: [String: String] = [:]
 
     let imageList = [
-        "casa1", "casa2", "trabalho1", "trabalho2", "educaçao1", "educacao2",
-        "compras1", "compras2", "desporto1", "desporto2",
+        "Calendar","Delegation","Management","Priority","Task", "Skill","Daily","Completed","Checklist"
     ]
 
     var body: some View {
