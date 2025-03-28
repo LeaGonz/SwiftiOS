@@ -17,6 +17,28 @@ struct ContentView: View {
     var body: some View {
         VStack {
             NavigationStack {
+                HStack {
+                    Text("Lista Tarefas")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+
+                    Spacer()
+
+                    // Add function
+                    Button {
+                        formClicked = true
+                    } label: {
+                        Image(systemName: "plus.rectangle.fill")
+                    }
+                    .foregroundStyle(.green)
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
+                    .sheet(isPresented: $formClicked) {
+                        AddTask(allTasks: $allTasks, formClicked: $formClicked)
+                    }
+                }
+                .padding(.horizontal)
+
                 List(allTasks) { task in
                     NavigationLink {
                         TasksListDetail(allTasks: $allTasks, task: task)
@@ -25,31 +47,30 @@ struct ContentView: View {
                             Image(task.image)
                                 .resizable()
                                 .frame(width: 100, height: 100)
-                            Text(task.title)
-                                .fontWeight(.bold)
+                                .cornerRadius(10)
+                                .shadow(
+                                    color: isDarkMode ? .white : .black,
+                                    radius: 3
+                                )
+                                .padding(.vertical)
+
+                            VStack(alignment: .leading) {
+                                Text(task.title)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+
+                                Text(task.category)
+                                    .fontWeight(.ultraLight)
+                            }
+                            .padding(.leading, 10)
+
+                            Spacer()
+
                         }
                     }
                 }
-                .navigationTitle("Lista Tarefas")
-
-                Spacer()
 
                 HStack {
-
-                    Spacer()
-
-                    // Add function
-                    Button {
-                        formClicked = true
-                    } label: {
-                        Image(systemName: "document.badge.plus.fill")
-                    }
-                    .foregroundStyle(.green)
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
-                    .sheet(isPresented: $formClicked) {
-                        AddTask(allTasks: $allTasks, formClicked: $formClicked)
-                    }
 
                     Spacer()
 
@@ -57,7 +78,7 @@ struct ContentView: View {
                     Button(action: {
                         showAlert = true
                     }) {
-                        Image(systemName: "xmark.bin.fill")
+                        Image(systemName: "minus.rectangle.fill")
                     }
                     .fontWeight(.bold)
                     .font(.largeTitle)
@@ -82,9 +103,9 @@ struct ContentView: View {
                     Button {
                         //
                     } label: {
-                        Image(systemName: "info.square.fill")
+                        Image(systemName: "person.2.fill")
                     }
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(isDarkMode ? .white : .black)
                     .fontWeight(.bold)
                     .font(.largeTitle)
 
@@ -92,14 +113,15 @@ struct ContentView: View {
 
                     // Dark / Light mode
                     Button {
-                            isDarkMode.toggle()
-                        } label: {
-                            Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
-                        }
-                        .foregroundStyle(.yellow)
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                    
+                        isDarkMode.toggle()
+                    } label: {
+                        Image(
+                            systemName: isDarkMode
+                                ? "moon.fill" : "sun.max.fill")
+                    }
+                    .foregroundStyle(.yellow)
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
 
                     Spacer()
                 }

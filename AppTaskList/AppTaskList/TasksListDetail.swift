@@ -48,30 +48,34 @@ struct TasksListDetail: View {
                 Button(action: {
                     formClicked = true
                 }) {
-                    Image(systemName: "pencil")
                     Text("Atualizar")
+                        .padding()
                 }
+                .frame(maxWidth: .infinity)
+                .background(.green)
+                .cornerRadius(40)
+                .foregroundStyle(.white)
                 .fontWeight(.bold)
-                .font(.title)
-                .foregroundStyle(.green)
+                .font(.callout)
                 .sheet(isPresented: $formClicked) {
                     UpdateTask(
                         allTasks: $allTasks, formClicked: $formClicked,
                         task: task)
                 }
 
-                Spacer()
-
                 // Delete function
                 Button(action: {
                     showAlert = true
                 }) {
-                    Image(systemName: "xmark.bin.fill")
                     Text("Apagar")
+                        .padding()
                 }
+                .frame(maxWidth: .infinity)
+                .background(.red)
+                .cornerRadius(40)
+                .foregroundStyle(.white)
                 .fontWeight(.bold)
-                .font(.title)
-                .foregroundStyle(.red)
+                .font(.callout)
                 .alert(
                     "Apagar Tarefa",
                     isPresented: $showAlert
@@ -89,6 +93,7 @@ struct TasksListDetail: View {
 
                 Spacer()
             }
+            .padding()
 
             Spacer()
 
@@ -97,6 +102,5 @@ struct TasksListDetail: View {
 }
 
 #Preview {
-    @State var allTasks: [Task] = []
-    TasksListDetail(allTasks: $allTasks, task: TasksList().allTasksJSON[0])
+    TasksListDetail(allTasks: .constant([Task]([])), task: TasksList().allTasksJSON[0])
 }

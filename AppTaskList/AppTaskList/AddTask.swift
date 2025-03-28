@@ -17,6 +17,8 @@ struct AddTask: View {
     @State private var taskCategory: String = ""
     @State private var taskImage: String = ""
 
+    @State var errors: [String: String] = [:]
+
     let imageList = [
         "casa1", "casa2", "trabalho1", "trabalho2", "educaçao1", "educacao2",
         "compras1", "compras2", "desporto1", "desporto2",
@@ -26,6 +28,8 @@ struct AddTask: View {
         Text("Adicionar Tarefa")
             .font(.title)
             .fontWeight(.bold)
+            .padding()
+
         VStack {
 
             VStack {
@@ -33,6 +37,12 @@ struct AddTask: View {
                     HStack {
                         Text("Nome:")
                         TextField("Insira nome da tarefa", text: $taskTitle)
+                    }
+                    if !errors.isEmpty {
+                        if errors.keys.contains("name") {
+                            let err = errors["name"] ?? ""
+                            Text(err).foregroundStyle(.red)
+                        }
                     }
                     HStack {
                         Text("Descrição:")
@@ -47,6 +57,13 @@ struct AddTask: View {
                             Text("Desporto").tag("Desporto")
                         }
                     }
+                    if !errors.isEmpty {
+                        if errors.keys.contains("category") {
+                            let err = errors["category"] ?? ""
+                            Text(err).foregroundStyle(.red)
+                        }
+                    }
+
                     HStack {
                         Picker(
                             "Imagem: ", selection: $taskImage,
@@ -68,29 +85,65 @@ struct AddTask: View {
             }
             .multilineTextAlignment(.leading)
 
-            Button {
-                var newTask = Task(
-                    id: allTasks.count + 1,
-                    title: taskTitle,
-                    description: taskDescription,
-                    category: taskCategory,
-                    image: taskImage)
-                allTasks.append(newTask)
-                formClicked = false
-            } label: {
-                Image(systemName: "document.badge.plus.fill")
-                Text("Adicionar")
-            }
-            .foregroundStyle(.green)
-            .fontWeight(.bold)
-            .font(.title)
+            HStack {
+
+                // Add function
+                Button {
+                    if taskTitle.isEmpty {
+                        errors["name"] = "O nome é obrigatório."
+                    } else {
+                        errors["name"] = nil
+                    }
+
+                    if taskCategory.isEmpty {
+                        errors["category"] = "A categoria é obrigatória."
+                    } else {
+                        errors["category"] = nil
+                    }
+
+                    if errors.isEmpty {
+                        let newTask = Task(
+                            id: allTasks.count + 1,
+                            title: taskTitle,
+                            description: taskDescription,
+                            category: taskCategory,
+                            image: taskImage)
+
+                        allTasks.append(newTask)
+
+                        formClicked = false
+                    }
+
+                } label: {
+                    Text("Adicionar")
+                        .padding()
+                }
+                .frame(maxWidth: .infinity)
+                .background(.green)
+                .cornerRadius(40)
+                .foregroundStyle(.white)
+                .fontWeight(.bold)
+                .font(.callout)
+
+                // Voltar function
+                Button(action: {
+                    formClicked = false
+                }) {
+                    Text("Voltar")
+                        .padding()
+                }
+                .frame(maxWidth: .infinity)
+                .background(.red)
+                .cornerRadius(40)
+                .foregroundStyle(.white)
+                .fontWeight(.bold)
+                .font(.callout)
+            }.padding()
+
         }
     }
 }
 
 #Preview {
-    @State var allTasks: [Task] = []
-    @State var formClicked: Bool = false
-
-    AddTask(allTasks: $allTasks, formClicked: $formClicked)
+    AddTask(allTasks: .constant([Task]([])), formClicked: .constant(false))
 }

@@ -27,6 +27,8 @@ struct UpdateTask: View {
         Text("Atualizar Tarefa")
             .font(.title)
             .fontWeight(.bold)
+            .padding()
+        
         VStack {
             VStack {
                 Form {
@@ -58,12 +60,14 @@ struct UpdateTask: View {
                                     })
                             })
                     }
+                    
                     if taskImage != "" {
                         Image(taskImage)
                             .resizable()
-                            .scaledToFill()
-                            .cornerRadius(10)
+                            .scaledToFit()
+                            .cornerRadius(20)
                     }
+                    
                 }
             }
             .multilineTextAlignment(.leading)
@@ -73,7 +77,7 @@ struct UpdateTask: View {
                 taskCategory = task.category
                 taskImage = task.image
             }
-
+            HStack {
             // Update function
             Button {
                 if let index = allTasks.firstIndex(where: { at in
@@ -86,21 +90,36 @@ struct UpdateTask: View {
                 }
                 formClicked = false
             } label: {
-                Image(systemName: "pencil")
                 Text("Atualizar")
+                    .padding()
             }
-            .foregroundStyle(.green)
+            .frame(maxWidth: 200)
+            .background(.green)
+            .cornerRadius(40)
+            .foregroundStyle(.white)
             .fontWeight(.bold)
-            .font(.title)
+            .font(.callout)
+            
+            // Voltar function
+            Button(action: {
+                formClicked = false
+            }) {
+                Text("Voltar")
+                    .padding()
+            }
+            .frame(maxWidth: .infinity)
+            .background(.red)
+            .cornerRadius(40)
+            .foregroundStyle(.white)
+            .fontWeight(.bold)
+            .font(.callout)
+        }.padding()
         }
     }
 }
 
 #Preview {
-    @State var allTasks: [Task] = []
-    @State var formClicked: Bool = false
-
     UpdateTask(
-        allTasks: $allTasks, formClicked: $formClicked,
+        allTasks: .constant([Task]([])), formClicked: .constant(false),
         task: TasksList().allTasksJSON[0])
 }
