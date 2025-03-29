@@ -7,22 +7,40 @@
 
 import Foundation
 
-class TasksList{
+class TasksList {
     var allTasksJSON: [Task] = []
-    
-    init (){
+    var allImagesJSON: [String] = []
+
+    init() {
         decodeJSONData()
+        decodeJSONImg()
     }
-    
-    func decodeJSONData(){
-        if let url=Bundle.main.url(forResource: "tasksList", withExtension: "json"){
-            do{
+
+    func decodeJSONData() {
+        if let url = Bundle.main.url(
+            forResource: "tasksList", withExtension: "json")
+        {
+            do {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
-                allTasksJSON = try
-                    decoder.decode([Task].self, from: data)
+                allTasksJSON = try decoder.decode([Task].self, from: data)
                 //print(allTasksJSON.count)
-            }catch{
+            } catch {
+                print("Error decoding JSON data: \(error)")
+            }
+        }
+    }
+
+    func decodeJSONImg() {
+        if let url = Bundle.main.url(
+            forResource: "imagesList", withExtension: "json")
+        {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                allImagesJSON = try decoder.decode(Img.self, from: data).images
+                //print(allImagesJSON.count)
+            } catch {
                 print("Error decoding JSON data: \(error)")
             }
         }

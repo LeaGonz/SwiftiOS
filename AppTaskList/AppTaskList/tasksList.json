@@ -1,23 +1,23 @@
 [
     {
         "id": 1,
-        "title": "Lavar Roupa",
-        "description": "Lavar Roupa bem limpinha",
-        "category": "Casa",
-        "image": "Calendar"
+        "title": "Aprender SwiftUI",
+        "description": "Estudar os fundamentos de SwiftUI durante 1 hora, focando em listas e navegação.",
+        "category": "Educação",
+        "image": "Programing"
     },
     {
         "id": 2,
-        "title": "Jogar futebol",
-        "description": "Jogar com os amigos futebol",
+        "title": "Corrida no Parque",
+        "description": "Fazer uma corrida de 30 minutos no Parque da Cidade para manter a forma física.",
         "category": "Desporto",
-        "image": "Delegation"
+        "image": "Sports"
     },
     {
         "id": 3,
-        "title": "Trabalho",
-        "description": "Enviar email",
-        "category": "Trabalho",
-        "image": "Management"
+        "title": "Preparar Bacalhau à Brás",
+        "description": "Cozinhar o tradicional Bacalhau à Brás para o jantar de domingo.",
+        "category": "Casa",
+        "image": "Food"
     }
 ]

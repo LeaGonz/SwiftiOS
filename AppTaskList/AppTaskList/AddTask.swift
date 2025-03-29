@@ -19,9 +19,7 @@ struct AddTask: View {
 
     @State var errors: [String: String] = [:]
 
-    let imageList = [
-        "Calendar","Delegation","Management","Priority","Task", "Skill","Daily","Completed","Checklist"
-    ]
+    var images = TasksList().allImagesJSON
 
     var body: some View {
         Text("Adicionar Tarefa")
@@ -51,7 +49,7 @@ struct AddTask: View {
                         Picker("Categoria: ", selection: $taskCategory) {
                             Text("Casa").tag("Casa")
                             Text("Trabalho").tag("Trabalho")
-                            Text("Compras").tag("Compras")
+                            Text("Developer").tag("Developer")
                             Text("Educação").tag("Educação")
                             Text("Desporto").tag("Desporto")
                         }
@@ -64,16 +62,26 @@ struct AddTask: View {
                     }
 
                     HStack {
-                        Picker(
-                            "Imagem: ", selection: $taskImage,
-                            content: {
-                                ForEach(
-                                    imageList, id: \.self,
-                                    content: { image in
-                                        Text(image).tag(image)
-                                    })
-                            })
+                        Text("Imagem")
+                        Menu {
+                            ForEach(images, id: \.self) { image in
+                                Button {
+                                    taskImage = image
+                                } label: {
+                                    HStack {
+                                        Image(image)
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                        Text(image)
+                                    }
+                                }
+                            }
+                        } label: {
+                            Text(taskImage)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }.menuStyle(.automatic)
                     }
+
                     if taskImage != "" {
                         Image(taskImage)
                             .resizable()

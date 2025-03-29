@@ -19,16 +19,18 @@ struct TasksListDetail: View {
 
             Spacer()
 
+            // Title
             Text(task.title)
                 .font(.title)
                 .fontWeight(.bold)
 
+            // Category
             Text(task.category)
                 .fontWeight(.ultraLight)
                 .multilineTextAlignment(.center)
 
+            // Image and description
             ZStack {
-
                 Image(task.image)
                     .resizable()
                     .scaledToFill()
@@ -85,7 +87,9 @@ struct TasksListDetail: View {
                     isPresented: $showAlert
                 ) {
                     Button("Apagar") {
-                        allTasks.removeAll(where: { at in at.id == task.id })
+                        if let i = allTasks.firstIndex(where: { at in at.id == task.id }) {
+                            allTasks.remove(at: i)
+                        }
                         dismiss()
                     }
                     Button("Cancelar") {}
